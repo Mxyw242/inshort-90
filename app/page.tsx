@@ -18,14 +18,14 @@ export default function HomePage() {
       const sessionUser = data.session?.user
       setUser(sessionUser)
       setCharLimit(sessionUser ? Infinity : 1000)
-  
+
       if (sessionUser) {
         const { data: profileData, error } = await supabase
           .from('profiles')
           .select('full_name')
           .eq('id', sessionUser.id)
           .single()
-  
+
         if (error) {
           console.error('Error fetching profile:', error.message)
         } else {
@@ -33,14 +33,14 @@ export default function HomePage() {
         }
       }
     }
-  
+
     getSession()
-  
+
     const { data: authListener } = supabase.auth.onAuthStateChange((_event, session) => {
       const sessionUser = session?.user
       setUser(sessionUser)
       setCharLimit(sessionUser ? Infinity : 1000)
-  
+
       if (sessionUser) {
         supabase
           .from('profiles')
@@ -56,7 +56,7 @@ export default function HomePage() {
           })
       }
     })
-  
+
     return () => {
       authListener.subscription.unsubscribe()
     }
@@ -100,10 +100,10 @@ export default function HomePage() {
         <div className="header-right">
           {user ? (
             <>
-            <span className="welcome-text">
-              Welcome {profile?.full_name || user.email}!
-            </span>
-            <button className="button" onClick={handleLogout}>Logout</button>
+              <span className="welcome-text">
+                Welcome {profile?.full_name || user.email}!
+              </span>
+              <button className="button" onClick={handleLogout}>Logout</button>
             </>
           ) : (
             <button className="button" onClick={handleLogin}>Login with Google</button>
@@ -112,7 +112,7 @@ export default function HomePage() {
       </header>
 
       <main className="container">
-      <h2 className="title">เครื่องมือสำหรับสรุปข้อความ</h2>
+        <h2 className="title">เครื่องมือสำหรับสรุปข้อความ</h2>
         <form onSubmit={handleSubmit}>
           <textarea
             className="textarea"
